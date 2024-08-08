@@ -24,4 +24,4 @@ jobs:
       - name: echo a string in powershell
         run: Write-Output "Windows string"
       - name: Error step
-        run: doesnotexists
+        run: doesnotexistss
