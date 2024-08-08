@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set simple error message
-        run: "::error::Missing Semicolon"
+        run: echo "::error::Missing Semicolon"
       - name: Set parameterized error message
-        run: "::error title=Simple Error,file=app.js,line=1,endLine=2,col=3,endColumn=5::Missing Semicolon Parameterized from job"
+        run: echo "::error title=Simple Error,file=app.js,line=1,endLine=2,col=3,endColumn=5::Missing Semicolon Parameterized from job"
       - name: Set debug message
-        run: "::debug title=Debug Title::This is debug message from job"
+        run: echo "::debug title=Debug Title::This is debug message from job"
       - name: Set warn message
-        run: "::warning title=Warning Title::This is warning message from job"
+        run: echo "::warning title=Warning Title::This is warning message from job"
       - name: Set notice message
-        run: "::notice title=Notice Title::This is notice message from job"
+        run: echo "::notice title=Notice Title::This is notice message from job"
