@@ -1,6 +1,7 @@
 # Workflow commands - send command to runner machine from within the jobs.
 # Example -  Send error message - but job won't fail
 # This is to raise custom errors / messages from pipeline to tell to the developers, in Summary we can see that
+# Note on masked - ::add-mask:: is showing secret, it will mask the passed string to it in subsequent steps (pointless?)
 
 name: Workflow commands
 on: [push]
@@ -28,7 +29,7 @@ jobs:
           echo "::group::My Group Title"
           echo "I am inside the group"
           echo "::endgroup::"
-      - name: Set a masked message
+      - name: Set a masked string
         run: echo "::add-mask::SecretMessage"
-      - name: Set an unmasked message
+      - name: echo a masked string (Should be ***)
         run: echo "SecretMessage"
