@@ -19,8 +19,9 @@ jobs:
         run: echo "::warning title=Warning Title::This is warning message from job"
       - name: Set notice message
         run: echo "::notice title=Notice Title::This is notice message from job"
+
   set-group-masked-messages:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Set a group message
         run: |
