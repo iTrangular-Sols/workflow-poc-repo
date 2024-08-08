@@ -19,3 +19,15 @@ jobs:
         run: echo "::warning title=Warning Title::This is warning message from job"
       - name: Set notice message
         run: echo "::notice title=Notice Title::This is notice message from job"
+  set-group-masked-messages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set a group message
+        run: |
+          echo "::group::My Group Title"
+          echo "I am inside the group"
+          echo "::endgroup::"
+      - name: Set a masked message
+        run: echo "::add-mask::SecretMessage"
+      - name: Set an unmasked message
+        run: echo "SecretMessage"
