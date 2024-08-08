@@ -1,0 +1,19 @@
+#use of read made actions
+#local / private action can be referenced as .github/actions/action_name (like local folders)
+#public actions can be referenced as reponame/action_name@verion/branch_name/commitid
+#uses also can use docker image
+
+name: Use Action Workflow
+on: [push]
+
+jobs:
+  use-simple-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simple JS Action
+        id: greet
+        uses: actions/hello-world-javascript-action@0828816592d203ea02db359e74a7e13ced4bb155
+        with:
+          who-to-greet: Sonal
+      - name: Display output of JS Action
+        run: echo "output of JS action" ${{ steps.greet.outputs.time }}
