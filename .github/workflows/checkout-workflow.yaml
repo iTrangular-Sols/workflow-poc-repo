@@ -6,10 +6,22 @@
 #Docker based GA -> Runs on all env, little bit slower, Since we need to pull build into runner machine
 #Composit GA -> Combine multiple steps of jobs / workflow into an action
 
+#actions/checkout@v3 -> this will checkout the branch based on the trigger
+
 name: Checkout Workflow
 on: [push]
 
 jobs:
+  checkout-using-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List Files Before
+        run: ls -a
+      - name: Checkout using action
+        uses: actions/Checkout@v3
+      - name: List Files After
+        run: ls -a
+
   checkout:
     runs-on: ubuntu-latest
     steps:
