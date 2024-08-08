@@ -17,7 +17,7 @@ jobs:
         run: |
           pwd
           ls -a
-          echo "commit is: $($GITHUB_SHA)"
+          echo "commit is: " $GITHUB_SHA
           echo "repo is: $($GITHUB_REPOSITORY)"
           echo "working directory is: $($GITHUB_WORKSPACE)"
       - name: Change working directory
