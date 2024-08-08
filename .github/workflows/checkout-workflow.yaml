@@ -22,7 +22,7 @@ jobs:
       - name: List Files After
         run: ls -a
 
-  checkout:
+  checkout-manually:
     runs-on: ubuntu-latest
     steps:
       - name: List Files Before
