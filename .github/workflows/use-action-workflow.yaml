@@ -16,4 +16,4 @@ jobs:
         with:
           who-to-greet: Sonal
       - name: Display output of JS Action
-        run: echo "output of JS action" ${{ steps.greet.outputs.time }}
+        run: echo "output of JS action" "${{ steps.greet.outputs.time }}"
