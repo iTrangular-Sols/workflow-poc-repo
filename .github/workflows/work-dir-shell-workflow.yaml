@@ -1,0 +1,44 @@
+#GITHUB_SHA is the commit id
+#BY DEFAULT BASH IS USED
+#DEFAULTS (WORKING DIRECTORY, SHELL TO USE) CAN BE GIVEN ON WORKFLOW, and overriden by JOB, STEP LEVEL
+
+name: Working directory and shell
+on: [push]
+defaults:
+  run:
+    shell: bash
+    # working-directory: /some/other/wdir
+
+jobs:
+  display-work-dir-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display working directory & list of files
+        run: |
+          pwd
+          ls -a
+          echo "commit is: $($GITHUB_SHA)"
+          echo "repo is: $($GITHUB_REPOSITORY)"
+          echo "working directory is: $($GITHUB_WORKSPACE)"
+      - name: Change working directory
+        working-directory: /home/runner
+        run: pwd
+
+  display-work-dir-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Display working directory & list of files
+        run: |
+          Get-Location
+          dir
+          echo "commit is: " + $env:GITHUB_SHA
+          echo "repo is: " + $env:GITHUB_REPOSITORY
+          echo "working directory is: " + $env:GITHUB_WORKSPACE
+      - name: Display in python shell
+        shell: python
+        run: |
+          import platform
+          print(platform.processor())
