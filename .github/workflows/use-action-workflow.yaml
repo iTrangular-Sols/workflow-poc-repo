@@ -1,6 +1,6 @@
 #use of read made actions
 #local / private action can be referenced as .github/actions/action_name (like local folders)
-#public actions can be referenced as reponame/action_name@verion/branch_name/commitid
+#public actions can be referenced as reponame/action_name@version/branch_name/commitid
 #uses also can use docker image
 
 name: Use Action Workflow
