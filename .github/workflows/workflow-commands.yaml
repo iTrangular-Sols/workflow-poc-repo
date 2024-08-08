@@ -1,6 +1,6 @@
 # Workflow commands - send command to runner machine from within the jobs.
 # Example -  Send error message - but job won't fail
-# This is to raise custom errors / messages from pipeline to tell to the developers
+# This is to raise custom errors / messages from pipeline to tell to the developers, in Summary we can see that
 
 name: Workflow commands
 on: [push]
@@ -12,7 +12,7 @@ jobs:
       - name: Set simple error message
         run: echo "::error::Missing Semicolon"
       - name: Set parameterized error message
-        run: echo "::error title=Simple Error,file=app.js,line=1,endLine=2,col=3,endColumn=5::Missing Semicolon Parameterized from job"
+        run: echo "::error title=Parameterized Error,file=app.js,line=1,endLine=2,col=3,endColumn=5::Missing Semicolon Parameterized from job"
       - name: Set debug message
         run: echo "::debug title=Debug Title::This is debug message from job"
       - name: Set warn message
