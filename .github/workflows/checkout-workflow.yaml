@@ -1,5 +1,10 @@
 #GITHUB_ACTOR IS USERNAME OF GITHUB USER
 #secrets.GITHUB_TOKEN ->  a token created for each workflow run which is present in the secret context to access the repo / github
+#checkout step have too many commands and hardcoded stuff, should be easy with actions - checkout code based on push branch, pull request
+#Github actions reusable code that can be used in steps, send sms, slack message, call third-party api
+#JS GA -> runs on all os runners, written in js
+#Docker based GA -> Runs on all env, little bit slower, Since we need to pull build into runner machine
+#Composit GA -> Combine multiple steps of jobs / workflow into an action
 
 name: Checkout Workflow
 on: [push]
