@@ -1,0 +1,20 @@
+#GITHUB_ACTOR IS USERNAME OF GITHUB USER
+#secrets.GITHUB_TOKEN ->  a token created for each workflow run which is present in the secret context to access the repo / github
+
+name: Checkout
+on: [push]
+
+jobs:
+  checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List Files Before
+        run: ls -a
+      - name: Clone & Checkout Repo
+        run: |
+          git init
+          git remote add origin "https://$GITHUB_ACTOR/${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
+          git fetch origin
+          git checkout first-workflow
+      - name: List Files After
+        run: ls -a
