@@ -1,5 +1,16 @@
+#REF will be current branch in case of push / or if new branch is pushed (we can filter this later)
+#REF will be result of the merge when pull request (not actual merge, but we can say dry merge) refs/pull/:prNumber/merge
+#REF will be current branch and SHA will be last commit for issues (when issue opened/closed) - all activity types trigger by default
+#Closing PR doesnt trigger by default
+
 name: Events Workflow
-on: [push, pull_request, issues]
+# on: [push, pull_request, issues]
+on:
+  push:
+  pull_request:
+    types: [opened, assigned, reopened, synchronize]
+  issues:
+    types: [opened]
 
 jobs:
   checkout-test:
