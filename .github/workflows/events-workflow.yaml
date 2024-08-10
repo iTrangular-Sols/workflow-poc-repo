@@ -5,11 +5,25 @@
 #On creating PR of forked repo to original repo - Some settings are required. Can set approval required to run workflow
 #pull_request_target -> run in the conext of base branch (checked out base branch) (the branch into which we are going to merge)
 # Ex. public repo -> forked PR -> don't need PR code, just need to label / comment on the PR
+#workflow run workflow should be in the main / default branch only then it will be triggered (only three levels of nesting)
+#Filters - filter and ignore filter cannot be used together, order is important, applicable to push / pull_request and even in workflow_run
 
 name: Events Workflow
 # on: [push, pull_request, issues]
 on:
   push:
+    branches:
+      - "feature/*"
+      - "feature/**"
+      - "!feature/featureA"
+    # branches-ignore:
+    #   - "develop"
+    tags:
+      - "v1.*"
+      - "!v1.1.1"
+    paths:
+      - "**.js"
+      - "!app.js"
   pull_request:
     types: [opened, assigned, reopened, synchronize]
   issues:

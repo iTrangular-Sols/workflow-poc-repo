@@ -1,0 +1,43 @@
+name: Manually Triggered
+
+on:
+  workflow_dispatch:
+    inputs:
+      str_in:
+        description: A string input
+        type: string
+        required: true
+        default: "Default value"
+      num_in:
+        description: A num input
+        type: number
+        required: true
+        default: 001
+      options_in:
+        description: An option input
+        type: choice
+        options:
+          - Option 1
+          - Option 2
+        required: true
+        default: Option 1
+      bool_in:
+        description: A boolean input
+        type: boolean
+        required: true
+        default: true
+
+jobs:
+  echo-info:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo $GITHUB_SHA
+      - run: echo $GITHUB_REF
+      - run: echo $GITHUB_REPOSITORY
+      - name: Show Input Values
+        run: |
+          echo "str_in: ${{ inputs.str_in }}"
+          echo "num_in: ${{ inputs.num_in }}"
+          echo "options_in: ${{ inputs.options_in }}"
+          echo "bool_in: ${{ inputs.bool_in }}"
+          echo "environment: ${{ inputs.environment }}"
