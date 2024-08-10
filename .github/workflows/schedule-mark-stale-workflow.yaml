@@ -1,4 +1,5 @@
 #schedule based workflow to mark stale issues and PRs as stale using re-usable action
+#needs to be in default branch
 
 name: Mark Issues & PRs Stale - Scheduled
 on:
