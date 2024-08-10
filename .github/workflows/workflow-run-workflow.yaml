@@ -1,7 +1,7 @@
 name: Workflow Run
 on:
   workflow_run:
-    workflows: [Events Workflow]
+    workflows: ["Events Workflow"]
     types: [completed]
 
 jobs:
