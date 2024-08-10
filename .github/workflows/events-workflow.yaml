@@ -2,6 +2,9 @@
 #REF will be result of the merge when pull request (not actual merge, but we can say dry merge) refs/pull/:prNumber/merge
 #REF will be current branch and SHA will be last commit for issues (when issue opened/closed) - all activity types trigger by default
 #Closing PR doesnt trigger by default
+#On creating PR of forked repo to original repo - Some settings are required. Can set approval required to run workflow
+#pull_request_target -> run in the conext of base branch (checked out base branch) (the branch into which we are going to merge)
+# Ex. public repo -> forked PR -> don't need PR code, just need to label / comment on the PR
 
 name: Events Workflow
 # on: [push, pull_request, issues]
