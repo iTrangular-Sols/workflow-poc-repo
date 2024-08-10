@@ -5,7 +5,7 @@ name: Mark Issues & PRs Stale - Scheduled
 on:
   schedule:
     - cron: "0 14 * * *"
-    - cron: "0/5 * * * *"
+    - cron: "*/5 * * * *"
 
 jobs:
   mark-stale:
