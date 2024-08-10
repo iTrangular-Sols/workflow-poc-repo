@@ -1,3 +1,7 @@
+#workflow_dispatch event can be triggered by cli as well and POST API request as well /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches
+#(Token required - Generate fine-grained token a lot of config done in settings and org settings)
+#this workflow can be triggered by cli -> gh workflow run wofkflow_file.yaml inputs same as ui....
+
 name: Manually Triggered
 
 on:

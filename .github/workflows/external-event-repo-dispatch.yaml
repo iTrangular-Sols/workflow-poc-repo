@@ -1,0 +1,20 @@
+#repository_dispatch is used for triggering from external events not happened on github
+#it can be triggered with POST API /repos/{owner}/{repo}/dispatches, TOKEN needed, TOKEN required perms are listed in doc of repo_dispatch.
+#that we the token need to be generated
+#This will be used with centralized CI/CD where different repos are in picture
+#service repo will trigger repo_dispatch by POST API in workflow yaml
+#This needs to be in default branch
+#event_type in payload/body of API - this is activity type of event repo_dispatch below
+
+name: External Events
+
+on:
+  repository_dispatch:
+    types: [build]
+
+jobs:
+  echo-a-string:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Repository Dispatch"
+      - run: echo "${{ github.event.client_payload.env }}" #this could be passed in API payload
