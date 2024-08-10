@@ -1,5 +1,9 @@
 #commenting on pr with pull_request_target event
 #use of github script - https://octokit.github.io/rest.js/v20#issues-create-comment
+#403 error -> the actions/github-script has the access to secrets.GITHUB_TOKEN internally by default, but it doesn't have write permission ont the PR
+#we can customize the that secret token to have write permissions in the workflow itself (temporarily we can give write permission in Settings > action)
+#pull_request_target can be used to label, comment, and don't want any un-trusted code to run on your workflow
+#pull_request_target wont' require any workflow run approval if fork PR
 
 name: Comment on PR
 on:
