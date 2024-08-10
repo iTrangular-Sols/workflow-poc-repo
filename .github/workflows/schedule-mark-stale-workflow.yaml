@@ -1,0 +1,17 @@
+#schedule based workflow to mark stale issues and PRs as stale using re-usable action
+
+name: Mark Issues & PRs Stale - Scheduled
+on:
+  schedule:
+    - cron: "0 14 * * *"
+    - cron: "0/5 * * * *"
+
+jobs:
+  mark-stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v8
+        with:
+          stale-issue-message: "This is old"
+          days-before-stale: 1
+          days-before-close: 5
