@@ -1,0 +1,34 @@
+# env variables like GITHUB_SHA, _REF, _ACTION... are also available as contexts
+#diff between GITHUB_REF AND ${{ github.ref }} - first one is env variable of runner machine, it resides in runner machine, evaluated in runner machine
+# second one (context) is evaluated in workflow by github action before sending the workflow to runner macine
+
+#CUSTOM ENV VARIABLS CAN BE DEFINED ON WORKFLOW, JOBS, STEPS LEVEL, ENV CAN BE OVERRIDEN BY LOW LEVEL
+
+name: Environment Variables
+on: [push]
+
+env:
+  WF_LEVEL_ENV: Available to all jobs
+
+jobs:
+  env-vars-and-context:
+    runs-on: ubuntu-latest
+    # if: $GITHUB_REF == 'refs/heads/main' WONT WORK SINCE ifs ARE EVALUATED BEFORE COMING TO RUNNER MACHINE
+    if: github.ref == 'rerfs/heads/main'
+    env:
+      JOB_LEVEL_ENV: Available to all steps
+    steps:
+      - name: Log ENVAR
+        # below is not in quote as it is an expression to be evaluated in runner machine
+        run: echo $GITHUB_REF
+      - name: Log Context
+        # below is in quote as the value in it is evaluated before sending to runner
+        run: echo '${{ github.ref }}'
+      - name: Log custom env vars
+        env:
+          STEP_LEVEL_ENV: Step level env
+          WF_LEVEL_ENV: WF level overriden in step
+        run: |
+          echo '${{ env.WF_LEVEL_ENV }}''
+          echo $JOB_LEVEL_ENV
+          echo $STEP_LEVEL_ENV
