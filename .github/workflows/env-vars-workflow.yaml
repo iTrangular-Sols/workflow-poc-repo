@@ -14,7 +14,7 @@ jobs:
   env-vars-and-context:
     runs-on: ubuntu-latest
     # if: $GITHUB_REF == 'refs/heads/main' WONT WORK SINCE ifs ARE EVALUATED BEFORE COMING TO RUNNER MACHINE
-    if: github.ref == 'rerfs/heads/main'
+    # if: github.ref == 'rerfs/heads/main'
     env:
       JOB_LEVEL_ENV: Available to all steps
     steps:
