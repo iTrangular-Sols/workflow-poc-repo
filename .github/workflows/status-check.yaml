@@ -2,6 +2,8 @@
 # if success() -> success() is default behavior
 # always() -> return true / always runs step / job regardless of status of previous job / step even if they are skipped
 # cancelled() -> returns true if workflow is cancelled, runs step / job when workflow is cancelled
+# to fail we can exit 1
+# failure() -> returns true if any previous failed, we can also check which step / job is failed and only then run use conclusion
 
 name: Status check
 
@@ -14,10 +16,14 @@ jobs:
       - name: Step 1
         run: sleep 20
       - name: This is to fail
+        id: step2
         run: exit 1
       - name: Runs on failure
-        if: failure()
-        run: echo 'runs only on failure'
+        # if: failure()
+        # below will run only on success() therefore override with failure() check
+        # success() is applied to if by default
+        if: failure() && steps.step2.conclusion == 'failure'
+        run: echo 'runs only on failure of step 2'
       - name: Runs on success
         if: success()
         run: echo 'runs on success'
