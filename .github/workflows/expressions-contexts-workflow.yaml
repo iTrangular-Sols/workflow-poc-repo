@@ -1,4 +1,7 @@
 #run-name -> name to the run of the workflow (by default it is commit message / PR title etc, based on event)
+#when created issue, it did not run since the workflow is not in the default branch
+#if key -> can be on job / step level. If the expression evaulated to tru then run job / step else SKIP (RUN WILL APPEAR BUT SKIPPED)
+#if key -> no need of ${{}} github will treat value of if as an expression
 
 name: Expressions & Contexts
 on: [push, pull_request, issues, workflow_dispatch]
@@ -6,8 +9,18 @@ on: [push, pull_request, issues, workflow_dispatch]
 run-name: "Expressions & Contexts by @${{ github.actor }}, event @${{ github.event_name }}"
 
 jobs:
+  runs-on-issues-and-prs:
+    runs-on: ubuntu-latest
+    if: contains(fromJson('["issues", "pull_request"]'), github.event_name)
+    steps:
+      - name: Run only if issue has a bug label
+        if: contains(github.event.issue.labels.*.name, 'bug')
+        # above labels conain objects, so to get array of name
+        run: echo 'labes are ' ${{join(github.event.issue.labels.*.name, ', ')}}
   Test-Expressions-Contexts:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    # if: contains('hello', 'll') -> true
     steps:
       - name: Expessions
         id: experssions
