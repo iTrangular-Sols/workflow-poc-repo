@@ -8,6 +8,19 @@
 #FILE PATH IS IN GITHUB_ENV -> FILE IS UNIQUE TO EACH STEP, SUBSEQUENT STEPS WILL HAVE ACCESS TO THIS VARIABLE
 #CUSTOM ENV CAN BE SET AS MULTI-LINE, DELIMTER SHOULD BE UNIQUE, RANDOM FOR SECURITY CODE AVAILABLE IN GITHUB
 
+#above envs are only available in this workflow, not in others or in other repo
+# configuration variables are available to multiple workflows and repos in organization, secrets are too similar to config var
+# they are not defined in workflow but organization (not on individual user level if repo is under it), repo level or in env level (UI)
+# environments only availabe in paid plan orgs and public repos
+# in org / public repo
+# Environments -> Staging, Production (These are envs not env vars - env vars are below for each env can be called as env level)
+# Staging / Produciton environment variable can have Secrets & Variables
+# secrets and variables are also available on repo level & org level (above were env level, env can be present on repos / orgs - generally orgs)
+# org var/secrets are available in all repos' workflow (can be configured)
+# repo level are available in all workflows in repos
+# env level are availble in workflow if it is using that env
+# env level take precedence before repo and org level
+
 name: Environment Variables
 on: [push]
 
