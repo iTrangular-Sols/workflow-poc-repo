@@ -5,6 +5,16 @@
 #pull_request_target can be used to label, comment, and don't want any un-trusted code to run on your workflow
 #pull_request_target wont' require any workflow run approval if fork PR
 
+#GITHUB_TOKEN secret is automatically generated for us in workflow at the beginning of each workflow run
+#It is expired when the job is finished
+#If the comment on Pr is create using this token the workflow if exists on that event will not be triggered. This is to avoid infinite loop
+#we can customize permissions on GITHUB_TOKEN in the workflow itself (check table in docs)
+#permissions key can be applied to workflow level or job level
+#permissions contain scope objects (issues is scope) -> if one scope mentioned then rest of the scopes will have Default access none
+#read/write/none
+#permissions: read-all, write-all -> to give all scopes read / write permission to GITHUB_TOKEN
+#permissions: {} - disable all scopes to GITHUB_TOKEN
+
 name: Comment on PR
 on:
   pull_request_target:
@@ -13,10 +23,13 @@ on:
 jobs:
   comment-on-pr:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - name: Commenting on PR
         uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }} #internally github-script uses this token
           script: |
             github.rest.issues.createComment({
               owner: context.repo.owner,
