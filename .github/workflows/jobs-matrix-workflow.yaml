@@ -20,7 +20,8 @@ on: [push]
 
 jobs:
   node-matrix:
-    continue-on-error: false #makes workflow success even if a job fails
+    # continue-on-error: false #if true makes workflow success even if a job fails
+    continue-on-error: ${{ matrix.experimental == true }} #if experimental then continue on error
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
