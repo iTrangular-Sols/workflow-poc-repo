@@ -28,10 +28,9 @@ jobs:
 
       - uses: actions/github-script@v6
         id: matrix-arrays
+        # the return statement of this JS considered an output of the step (it internally adds to $GITHUB_OUTPUT)
         with:
           script: |
-            # the return statement of this JS considered an output of the step (it internally adds to $GITHUB_OUTPUT)
-
             "return { 
             'os': context.payload.inputs['os'].split(','), 
             'node-version': context.payload.inputs['node-version'].split(',')}"
