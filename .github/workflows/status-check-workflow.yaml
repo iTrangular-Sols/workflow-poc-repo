@@ -26,7 +26,7 @@ jobs:
         # below will run only on success() therefore override with failure() check
         # success() is applied to if by default
         if: failure() && steps.step2.conclusion == 'failure'
-        run: echo 'runs only on failure of step 2'
+        run: echo 'runs only on failure of Step 2'
       - name: Runs on failure
         if: failure()
         run: echo 'Failure'
