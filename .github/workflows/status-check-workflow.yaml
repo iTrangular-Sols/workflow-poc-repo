@@ -5,7 +5,8 @@
 # to fail we can exit 1
 # failure() -> returns true if any previous failed, we can also check which step / job is failed and only then run use conclusion
 
-#timeout / continue on error - exclude a certain step from failing the workflow / job even if it fails, if:success() will run
+#timeout / continue on error - exclude a certain step from failing the workflow / job even if it fails, if:success() will run, if failure skipped
+#timeout in mins
 
 name: Status check
 
@@ -16,7 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Step 1
-        run: sleep 20
+        run: sleep 90
+        timeout-minutes: 1
       - name: This is to fail
         id: step2
         continue-on-error: true
