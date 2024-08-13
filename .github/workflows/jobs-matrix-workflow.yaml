@@ -12,7 +12,7 @@
 # { os: windows-latest, node-version: 14, experimental: false }
 # { os: windows-latest, node-version: 15, experimental: false }
 # { os: windows-latest, node-version: 16, experimental: false }
-# { os: macos-latest, node-version: 15}
+# { os: macos-latest, node-version: 16}
 # { os: ubuntu-latest, node-version: 17 }
 
 name: Matrix Workflow
@@ -29,7 +29,7 @@ jobs:
           - os: ubuntu-latest
             is-ubuntu: true
           - os: macos-latest
-            node-version: 15
+            node-version: 16
           - experimental: false # only to original combination
           - os: ubuntu-latest
             node-version: 16
