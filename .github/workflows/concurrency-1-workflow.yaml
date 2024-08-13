@@ -12,7 +12,15 @@ on:
         type: environment
         required: true
 
-concurrency: concurrency-1 #this is called as concurrency group, it garuantees that only one workfow / job is running in this group
+#this is called as concurrency group, it garuantees that only one workfow / job is running at a time,
+#but it will execute all runs sequentially
+
+#concurrency: concurrency-1
+
+#following will cancel any inprogress and continue the latest one
+concurrency:
+  group: concurrency-1
+  cancel-in-progress: true
 
 jobs:
   sleep:
