@@ -1,3 +1,8 @@
+#by default same workflow / job can be running multiple times
+#but sometime we want them to be running only one run at a time
+#ex. we want latest code commit and workflow run to deploy and any in progress to be cancelled
+#concurrency key can be used on workflow and job level
+
 name: Concurrency 1 Workflow
 on:
   workflow_dispatch:
@@ -6,6 +11,8 @@ on:
         description: "Environment"
         type: environment
         required: true
+
+concurrency: concurrency-1 #this is called as concurrency group, it garuantees that only one workfow / job is running in this group
 
 jobs:
   sleep:
