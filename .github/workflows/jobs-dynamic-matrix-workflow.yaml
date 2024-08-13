@@ -1,4 +1,5 @@
 #COPIED FROM JOBS-MATRIX-WORKFLOW.YAML - this has to be in default since workflow_dispatch
+#a step can process the input produce some output and further steps can use the output
 
 name: Dynamic Matrix Workflow
 on:
@@ -24,6 +25,19 @@ jobs:
       - run: |
           echo '${{ steps.step-1.outputs.step-output }}'
           echo '${{ steps.step-2.outputs.step-output }}'
+
+      - uses: actions/github-script@v6
+        id: matrix-arrays
+        with:
+          script: |
+            # the return statement of this JS considered an output of the step (it internally adds to $GITHUB_OUTPUT)
+
+            "return { 
+            'os': context.payload.inputs['os'].split(','), 
+            'node-version': context.payload.inputs['node-version'].split(',')}"
+          result-encoding: json
+      - run: echo '${{ steps.matrix-arrays.outputs.result }}'
+
   node-matrix:
     # continue-on-error: false #if true makes workflow success even if a job fails
     continue-on-error: ${{ matrix.experimental == true }} #if experimental then continue on error
