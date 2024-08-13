@@ -41,9 +41,11 @@ jobs:
             node-version: 14 # exclude all with os: ubuntu-latest and node-version 14
 
       max-parallel: 3
-      fail-fast: false # prevents other in progress jobs continue if a job fail
+      fail-fast: true # if false prevents other in progress jobs continue if a job fail, if true other pending jobs will be cancelled
     runs-on: ${{ matrix.os }}
     steps:
+      - if: matrix.experimental == true
+        run: exit 1
       - run: node -v
       - run: echo '${{ toJson(matrix) }}'
       - uses: actions/setup-node@v3
