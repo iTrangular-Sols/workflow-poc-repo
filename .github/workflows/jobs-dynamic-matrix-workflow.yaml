@@ -1,5 +1,6 @@
 #COPIED FROM JOBS-MATRIX-WORKFLOW.YAML - this has to be in default since workflow_dispatch
 #a step can process the input produce some output and further steps can use the output
+#job's ouput can be accessed in subsequent job - map step output to job output
 
 name: Dynamic Matrix Workflow
 on:
@@ -17,6 +18,8 @@ on:
 jobs:
   prepare-matrix:
     runs-on: ubuntu-latest
+    outputs:
+      matrix-arrays: ${{ steps.matrix-arrays.outputs.result }} #this will set the output of step to output of job with key matrix-array
     steps: #this is how we produce an output in the step and access it in subsequent step
       - run: echo "step-output=value" >> $GITHUB_OUTPUT
         id: step-1
@@ -29,6 +32,7 @@ jobs:
       - uses: actions/github-script@v6
         id: matrix-arrays
         # the return statement of this JS considered an output of the step (it internally adds to $GITHUB_OUTPUT)
+        # multi line doesnt work in script
         with:
           script: "return { 'os': context.payload.inputs['os'].split(','),
             'node-version': context.payload.inputs['node-version'].split(',')}"
@@ -36,12 +40,15 @@ jobs:
       - run: echo '${{ steps.matrix-arrays.outputs.result }}'
 
   node-matrix:
+    needs: prepare-matrix
     # continue-on-error: false #if true makes workflow success even if a job fails
     continue-on-error: ${{ matrix.experimental == true }} #if experimental then continue on error
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
-        node-version: [14, 15, 16]
+        os: ${{ fromJson(needs.prepare-matrix.outputs.matrix-arrays).os }}
+        node-version: ${{ fromJson(needs.prepare-matrix.outputs.matrix-arrays).node-version }}
+        #os: ["ubuntu-latest", "windows-latest"]
+        #node-version: [14, 15, 16]
         include:
           - os: ubuntu-latest
             is-ubuntu: true
