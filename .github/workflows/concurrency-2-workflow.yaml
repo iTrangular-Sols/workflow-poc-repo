@@ -1,4 +1,16 @@
+#by default same workflow / job can be running multiple times
+#but sometime we want them to be running only one run at a time
+#ex. we want latest code commit and workflow run to deploy and any in progress to be cancelled
+#concurrency key can be used on workflow and job level
+
+#COPIED FROM CONCURRENCY 1
+# TWO WORKFLOWS BELONGING TO SAME CONCURRENCY GROUP WILL CANCEL EACH OTHER EVEN IF TWO DIFFERENT WORKFLOWS
+# add workflow name to the concurrency group to make concurrency name unique access workflows
+
+#dynamic concurrency can give more control to when to run more than one runs (paramter based)
+
 name: Concurrency 2 Workflow
+run-name: Concurrency 2 Workflow (${{ inputs.environment }})
 on:
   workflow_dispatch:
     inputs:
@@ -6,6 +18,18 @@ on:
         description: "Environment"
         type: environment
         required: true
+
+#this is called as concurrency group, it garuantees that only one workfow / job is running at a time,
+#but it will execute all runs sequentially
+
+#concurrency: concurrency-1
+
+#following will cancel any inprogress and continue the latest one
+#but it will cancel even though we choose diferent env (prod and stage)
+# add workflow name to the concurrency group to make concurrency name unique access workflows
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.inputs.environment }} #concurrency-1
+  cancel-in-progress: true
 
 jobs:
   sleep:

@@ -21,7 +21,7 @@ on:
 #following will cancel any inprogress and continue the latest one
 #but it will cancel even though we choose diferent env (prod and stage)
 concurrency:
-  group: ${{ github.event.inputs.environment }} #concurrency-1
+  group: ${{ github.workflow }}-${{ github.event.inputs.environment }} #concurrency-1
   cancel-in-progress: true
 
 jobs:
