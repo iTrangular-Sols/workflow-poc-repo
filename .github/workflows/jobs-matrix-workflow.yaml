@@ -2,7 +2,7 @@
 #run job multiple times with different node versions
 #run job with each value in array
 
-name: Matrix
+name: Matrix Workflow
 on: [push]
 
 jobs:
@@ -13,7 +13,7 @@ jobs:
         node-version: [14, 15, 16]
     steps:
       - run: node -v
-      - uses: action/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - run: node -v
