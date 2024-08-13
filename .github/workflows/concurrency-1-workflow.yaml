@@ -4,6 +4,7 @@
 #concurrency key can be used on workflow and job level
 
 name: Concurrency 1 Workflow
+run-name: Concurrency 1 Workflow (${{ inputs.environment }})
 on:
   workflow_dispatch:
     inputs:
@@ -18,8 +19,9 @@ on:
 #concurrency: concurrency-1
 
 #following will cancel any inprogress and continue the latest one
+#but it will cancel even though we choose diferent env (prod and stage)
 concurrency:
-  group: concurrency-1
+  group: ${{ github.event.inputs.environment }} #concurrency-1
   cancel-in-progress: true
 
 jobs:
