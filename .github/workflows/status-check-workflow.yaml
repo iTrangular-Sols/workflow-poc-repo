@@ -5,6 +5,8 @@
 # to fail we can exit 1
 # failure() -> returns true if any previous failed, we can also check which step / job is failed and only then run use conclusion
 
+#timeout / continue on error
+
 name: Status check
 
 on: [push]
@@ -18,12 +20,15 @@ jobs:
       - name: This is to fail
         id: step2
         run: exit 1
-      - name: Runs on failure
+      - name: Runs on step 2 failure
         # if: failure()
         # below will run only on success() therefore override with failure() check
         # success() is applied to if by default
         if: failure() && steps.step2.conclusion == 'failure'
         run: echo 'runs only on failure of step 2'
+      - name: Runs on failure
+        if: failure()
+        run: echo 'Failure'
       - name: Runs on success
         if: success()
         run: echo 'runs on success'
