@@ -30,9 +30,7 @@ jobs:
         id: matrix-arrays
         # the return statement of this JS considered an output of the step (it internally adds to $GITHUB_OUTPUT)
         with:
-          script: |
-            "return { 
-            'os': context.payload.inputs['os'].split(','), 
+          script: "return { 'os': context.payload.inputs['os'].split(','),
             'node-version': context.payload.inputs['node-version'].split(',')}"
           result-encoding: json
       - run: echo '${{ steps.matrix-arrays.outputs.result }}'
