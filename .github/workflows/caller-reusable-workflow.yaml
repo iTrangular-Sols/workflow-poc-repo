@@ -1,0 +1,22 @@
+#setting on org level to all re-usable worflow should be enabled, same settings are available in repo settings
+
+name: Calling Reusable Workflow
+on:
+  #it can be anything - but just for easy testing
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Input description"
+        type: string
+        default: "All"
+        required: false
+
+jobs:
+  calling-a-reusable-workflow:
+    # no runs-on since it will call another workflow which have actual job
+    # if same repo then path ./github/workflows/......yaml in uses for different repo
+    uses: iTrangular-Sols/workflows/.github/workflows/reusable-workflow.yaml@main
+    with:
+      name: ${{ inputs.name }}
+    secrets: #inherit -> this can take all secrets of caller and pass them as secrets to called workflow
+      access-token: ${{ secrets.ACCESS_TOKEN }}
