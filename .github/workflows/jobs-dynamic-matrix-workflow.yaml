@@ -1,0 +1,60 @@
+#COPIED FROM JOBS-MATRIX-WORKFLOW.YAML
+
+name: Dynamic Matrix Workflow
+on:
+  workflow_dispatch:
+    inputs:
+      os:
+        description: Operating system
+        default: "windows-latest,ubuntu-latest"
+        type: string
+      node-version:
+        description: Node version
+        default: "14,15,16"
+        type: string
+
+jobs:
+  prepare-matrix:
+    runs-on: ubuntu-latest
+    steps: #this is how we produce an output in the step and access it in subsequent step
+      - run: echo "step-output=value" >> $GITHUB_OUTPUT
+        id: step-1
+      - run: echo "step-output=value 2" >> $GITHUB_OUTPUT
+        id: step-2
+      - run: |
+          echo '${{ steps.step-1.outputs.step-output }}'
+          echo '${{ steps.step-2.outputs.step-output }}'
+  node-matrix:
+    # continue-on-error: false #if true makes workflow success even if a job fails
+    continue-on-error: ${{ matrix.experimental == true }} #if experimental then continue on error
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node-version: [14, 15, 16]
+        include:
+          - os: ubuntu-latest
+            is-ubuntu: true
+          - os: macos-latest
+            node-version: 16
+          - experimental: false # only to original combination
+          - os: ubuntu-latest
+            node-version: 16
+            experimental: true
+          - os: ubuntu-latest
+            node-version: 17
+        exclude:
+          - os: ubuntu-latest # exclude all with os: ubuntu-latest
+            node-version: 14 # exclude all with os: ubuntu-latest and node-version 14
+
+      max-parallel: 3
+      fail-fast: true # if false prevents other in progress jobs continue if a job fail, if true other pending jobs will be cancelled
+    runs-on: ${{ matrix.os }}
+    steps:
+      - if: matrix.experimental == true
+        run: exit 1
+      - run: node -v
+      - run: echo '${{ toJson(matrix) }}'
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: node -v
