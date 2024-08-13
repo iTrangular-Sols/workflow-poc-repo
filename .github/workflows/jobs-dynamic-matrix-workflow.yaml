@@ -1,4 +1,4 @@
-#COPIED FROM JOBS-MATRIX-WORKFLOW.YAML
+#COPIED FROM JOBS-MATRIX-WORKFLOW.YAML - this has to be in default since workflow_dispatch
 
 name: Dynamic Matrix Workflow
 on:
